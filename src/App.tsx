@@ -19,7 +19,7 @@ function App() {
     <div className="app-container">
       <h1>My Notes</h1>
       <NoteForm onAdd={addNote} />
-      <NoteList></NoteList>
+      <NoteList notes={notes} />
     </div>
   );
 }

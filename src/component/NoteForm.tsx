@@ -21,7 +21,7 @@ function NoteForm({ onAdd }: NoteFormProps) {
         type="text" 
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder="pls input note."
+        placeholder="pls input note"
       />
       <button type="submit">Add Note</button>
     </form>
