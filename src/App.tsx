@@ -13,13 +13,18 @@ function App() {
       text: text,
     };
     setNotes([...notes, newNote]);
+    console.log(notes)
+  };
+
+  const deleteNote = (id: number) => {
+    setNotes(notes.filter(note => note.id !== id));
   };
 
   return (
     <div className="app-container">
       <h1>My Notes</h1>
       <NoteForm onAdd={addNote} />
-      <NoteList notes={notes} />
+      <NoteList notes={notes} onDelete={deleteNote} />
     </div>
   );
 }
