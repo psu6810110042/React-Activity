@@ -1,19 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // 1. Import useEffect
 import { type Note } from './type';
 import NoteForm from './component/NoteForm';
 import NoteList from './component/NoteList';
 import './App.css';
 
 function App() {
-  const [notes, setNotes] = useState<Note[]>([]);
+  // 2. Initialize state with a function to load data immediately on startup
+  const [notes, setNotes] = useState<Note[]>(() => {
+    const saved = localStorage.getItem('my-notes');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // 3. Save to localStorage whenever the 'notes' array changes
+  useEffect(() => {
+    localStorage.setItem('my-notes', JSON.stringify(notes));
+  }, [notes]);
 
   const addNote = (text: string) => {
-    const newNote: Note = {
-      id: Date.now(),
-      text: text,
-    };
+    const newNote: Note = { id: Date.now(), text };
     setNotes([...notes, newNote]);
-    console.log(notes)
   };
 
   const deleteNote = (id: number) => {
