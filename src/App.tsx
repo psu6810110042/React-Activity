@@ -5,13 +5,12 @@ import NoteList from './component/NoteList';
 import './App.css';
 
 function App() {
-  // 2. Initialize state with a function to load data immediately on startup
+  // lazy initilization ex. code runs once when setNotes is called
   const [notes, setNotes] = useState<Note[]>(() => {
     const saved = localStorage.getItem('my-notes');
     return saved ? JSON.parse(saved) : [];
   });
 
-  // 3. Save to localStorage whenever the 'notes' array changes
   useEffect(() => {
     localStorage.setItem('my-notes', JSON.stringify(notes));
   }, [notes]);

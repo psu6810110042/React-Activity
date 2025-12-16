@@ -1,31 +1,39 @@
 import React, { useState } from 'react';
 
 interface NoteFormProps {
-  onAdd: (text: string) => void;
+    onAdd: (text: string) => void;
 }
 
 function NoteForm({ onAdd }: NoteFormProps) {
-  const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputValue.trim()) return;
+    // type-safe handler function
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+    };
 
-    onAdd(inputValue);
-    setInputValue('');
-  };
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder="pls input note"
-      />
-      <button type="submit">Add Note</button>
-    </form>
-  );
+        // check is input is empty or not
+        if (!inputValue.trim()) return;
+
+        onAdd(inputValue);
+        setInputValue('');
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input
+                type="text"
+                value={inputValue}
+                // added type safe handler
+                onChange={handleChange}
+                placeholder="pls input note"
+            />
+            <button type="submit">Add Note</button>
+        </form>
+    );
 }
 
 export default NoteForm;
